@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Animation Example</title>
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.2/gsap.min.js"></script>
+  <!-- ScrollMagic CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+  <!-- ScrollMagic GSAP Plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/animation.gsap.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .section {
+      width: 100%;
+      height: 100vh; /* Full screen height */
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .section1 {
+      background-color: #b3cde0;
+    }
+
+    .section2 {
+      background-color: #f5b7b1;
+    }
+
+    .content {
+      color: white;
+      font-size: 2rem;
+      z-index: 2;
+    }
+
+    .bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200%;
+      height: 200%;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="section section1">
+    <div class="bg"></div>
+    <div class="content">Section 1</div>
+  </div>
+
+  <div class="section section2">
+    <div class="bg"></div>
+    <div class="content">Section 2</div>
+  </div>
+
+  <script>
+    // Initialize ScrollMagic Controller
+    const controller = new ScrollMagic.Controller();
+
+    // GSAP Animation for Section 1 - Parallax Effect
+    const scene1 = new ScrollMagic.Scene({
+      triggerElement: ".section1",   // Trigger when Section 1 is in view
+      triggerHook: "onEnter",         // Trigger at the start of the viewport
+      duration: "100%"                // Duration of the scroll effect
+    })
+    .setTween(gsap.to(".section1 .bg", {
+      y: "50%",                      // Move the background element on scroll
+      ease: "none",                  // Use no easing for smooth movement
+    }))
+    .addTo(controller);              // Add to the ScrollMagic controller
+
+    // GSAP Animation for Section 2 - Fade-in Effect
+    const scene2 = new ScrollMagic.Scene({
+      triggerElement: ".section2",   // Trigger when Section 2 is in view
+      triggerHook: "onEnter",         // Trigger at the start of the viewport
+      duration: "100%"                // Duration of the scroll effect
+    })
+    .setTween(gsap.fromTo(".section2 .content", {
+      opacity: 0,                    // Start with content invisible
+    }, {
+      opacity: 1,                    // Fade to visible
+      ease: "power1.out",            // Ease effect for the fade
+      duration: 1                     // Duration of the fade
+    }))
+    .addTo(controller);              // Add to the ScrollMagic controller
+  </script>
+
+</body>
+</html>
